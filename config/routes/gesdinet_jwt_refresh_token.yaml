@@ -1,0 +1,3 @@
+gesdinet_jwt_refresh_token:
+    path: '/jwt/refresh'
+    methods: [POST]

@@ -1,0 +1,53 @@
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        users:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        jwt_get_token:
+            pattern:  &jwt '^/jwt/token'
+            stateless: true
+            provider: users
+            json_login:
+                check_path: /jwt/token
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        jwt_refresh:
+            pattern: &jwt_refresh '^/jwt/refresh'
+            stateless: true
+            provider: users
+            refresh_jwt:
+                check_path: 'jwt_refresh_token'
+
+        api:
+            pattern: &api '^/.+'
+            stateless: true
+            lazy: true
+            provider: users
+            jwt: ~
+
+    access_control:
+        - { path: *jwt, roles: PUBLIC_ACCESS }
+        - { path: *jwt_refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
+when@test:
+#    security:
+#        password_hashers:
+#            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+#                algorithm: auto
+#                cost: 4 # Lowest possible value for bcrypt
+#                time_cost: 3 # Lowest possible value for argon
+#                memory_cost: 10 # Lowest possible value for argon
