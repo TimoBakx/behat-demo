@@ -20,9 +20,8 @@ final readonly class UserContext implements Context
     private EntityManager $manager;
     private UserRepository $repository;
 
-    public function __construct(
-        ManagerRegistry $doctrine,
-    ) {
+    public function __construct(ManagerRegistry $doctrine)
+    {
         $this->manager = $doctrine->getManagerForClass(User::class);
         $this->repository = $this->manager->getRepository(User::class);
     }

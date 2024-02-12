@@ -13,15 +13,18 @@ use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Schema\Identifier;
 use Doctrine\Persistence\ManagerRegistry;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 final readonly class ApplicationContext implements Context
 {
     private const DOCTRINE_MIGRATIONS_TABLE = 'doctrine_migration_versions';
     private const CONTENT_TYPE = 'application/ld+json';
     private RestContext $restContext;
+    private UserContext $userContext;
 
     public function __construct(
         private ManagerRegistry $doctrine,
+        private JWTTokenManagerInterface $jwtManager,
     ) {
     }
 
@@ -31,6 +34,7 @@ final readonly class ApplicationContext implements Context
     public function gatherContexts(BeforeScenarioScope $scope): void
     {
         $this->restContext = $scope->getEnvironment()->getContext(RestContext::class);
+        $this->userContext = $scope->getEnvironment()->getContext(UserContext::class);
     }
 
     /**
@@ -83,4 +87,16 @@ final readonly class ApplicationContext implements Context
         }
     }
 
+    /**
+     * @Given /^I am logged in as "([^"]*)"$/
+     */
+    public function iAmLoggedInAs(string $email): void
+    {
+        $user = $this->userContext->thereIsAUser($email);
+
+        $token = $this->jwtManager->create($user);
+        $this->restContext->iAddHeaderEqualTo('Authorization', 'Bearer ' . $token);
+
+//        $this->loggedInUser = $user;
+    }
 }

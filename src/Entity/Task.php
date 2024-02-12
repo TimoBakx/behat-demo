@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,12 +32,11 @@ class Task
         private User $owner,
 
         #[ORM\Column(nullable: true)]
-        #[ApiProperty()]
         #[Groups(['read', 'write'])]
         public ?\DateTimeImmutable $dueDate = null,
 
     ) {
-        $this->id = Uuid::v4();
+        $this->id = Uuid::v7();
     }
 
     public function getId(): Uuid

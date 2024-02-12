@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         public string $email,
     )
     {
-        $this->id = Uuid::v4();
+        $this->id = Uuid::v7();
     }
 
     public function getId(): Uuid

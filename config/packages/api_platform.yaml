@@ -9,6 +9,8 @@ api_platform:
         html: ['text/html']
     defaults:
         stateless: true
+        normalization_context:
+            skip_null_values: false
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:
