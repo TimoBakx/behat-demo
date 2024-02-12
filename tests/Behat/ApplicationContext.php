@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Behat;
 
 use Behat\Behat\Context\Context;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behatch\Context\RestContext;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
@@ -15,10 +17,29 @@ use Doctrine\Persistence\ManagerRegistry;
 final readonly class ApplicationContext implements Context
 {
     private const DOCTRINE_MIGRATIONS_TABLE = 'doctrine_migration_versions';
+    private const CONTENT_TYPE = 'application/ld+json';
+    private RestContext $restContext;
 
     public function __construct(
         private ManagerRegistry $doctrine,
     ) {
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function gatherContexts(BeforeScenarioScope $scope): void
+    {
+        $this->restContext = $scope->getEnvironment()->getContext(RestContext::class);
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function setGeneralHeaders(): void
+    {
+        $this->restContext->iAddHeaderEqualTo('Content-Type', self::CONTENT_TYPE);
+        $this->restContext->iAddHeaderEqualTo('Accept', self::CONTENT_TYPE);
     }
 
     /**

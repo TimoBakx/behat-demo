@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
@@ -19,7 +20,7 @@ use Symfony\Component\Uid\Uuid;
 class Task
 {
     #[ORM\Id]
-    #[ORM\Column]
+    #[ORM\Column(type: UuidType::NAME)]
     private Uuid $id;
 
     public function __construct(

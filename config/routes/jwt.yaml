@@ -1,3 +1,6 @@
 jwt_get_token:
     path: '/jwt/token'
     methods: [POST]
+
+jwt_check_token:
+    path: '/jwt/token_check'
