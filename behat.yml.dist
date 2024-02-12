@@ -1,0 +1,25 @@
+default:
+    suites:
+        default:
+            contexts:
+                - behatch:context:browser
+                - behatch:context:debug
+                - behatch:context:system
+                - behatch:context:json
+                - behatch:context:rest
+                - Behat\MinkExtension\Context\MinkContext
+                - App\Tests\Behat\ApplicationContext
+                - App\Tests\Behat\UserContext
+                - App\Tests\Behat\TaskContext
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension: ~
+        Behatch\Extension: ~
+        Behat\MinkExtension:
+            base_url: ''
+#            linku_browserkit:
+#                default_client_options:
+#                    cafile: '/Users/timobakx/cert/server.pem'
+            sessions:
+                browserkit:
+                    browserkit_http: ~

@@ -18,6 +18,8 @@
         "symfony/dotenv": "7.0.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.0.*",
+        "symfony/http-client": "7.0.*",
+        "symfony/mime": "7.0.*",
         "symfony/runtime": "7.0.*",
         "symfony/twig-bundle": "7.0.*",
         "symfony/uid": "7.0.*",
@@ -74,6 +76,11 @@
         }
     },
     "require-dev": {
+        "behat/behat": "^3.14",
+        "behat/mink-browserkit-driver": "^2.2",
+        "friends-of-behat/mink-extension": "^2.7",
+        "friends-of-behat/symfony-extension": "^2.5",
+        "soyuka/contexts": "^3.3",
         "symfony/debug-bundle": "7.0.*",
         "symfony/maker-bundle": "^1.54",
         "symfony/stopwatch": "7.0.*",
