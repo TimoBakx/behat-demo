@@ -7,6 +7,7 @@ namespace App\ApiPlatform;
 use ApiPlatform\Serializer\SerializerContextBuilderInterface;
 use App\Entity\Task;
 use App\Entity\User;
+use App\Security\CurrentlyLoggedInUser;
 use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -22,6 +23,7 @@ final readonly class AddCurrentUserToConstructorParameters implements Serializer
     public function __construct(
         private SerializerContextBuilderInterface $decorated,
         private TokenStorageInterface $tokenStorage,
+        private CurrentlyLoggedInUser $currentlyLoggedInUser,
     ) {
     }
 
@@ -29,7 +31,7 @@ final readonly class AddCurrentUserToConstructorParameters implements Serializer
     {
         $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);
 
-        $user = $this->getUser();
+        $user = $this->currentlyLoggedInUser->get();
 
         $context[AbstractNormalizer::DEFAULT_CONSTRUCTOR_ARGUMENTS] = $context[AbstractNormalizer::DEFAULT_CONSTRUCTOR_ARGUMENTS] ?? [];
         foreach (self::ARGUMENTS as $class => $parameter) {
@@ -37,16 +39,5 @@ final readonly class AddCurrentUserToConstructorParameters implements Serializer
         }
 
         return $context;
-    }
-
-    public function getUser(): ?User
-    {
-        $user = $this->tokenStorage->getToken()?->getUser();
-
-        if (!$user instanceof User) {
-            return null;
-        }
-
-        return $user;
     }
 }
