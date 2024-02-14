@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "properties": {
+        "@context": {
+            "type": "string"
+        },
+        "@id": {
+            "type": "string"
+        },
+        "@type": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "dueDate": {
+            "type": [
+                "null",
+                "string"
+            ]
+        }
+    },
+    "required": [
+        "@context",
+        "@id",
+        "@type",
+        "title",
+        "dueDate"
+    ],
+    "additionalProperties": false
+}
