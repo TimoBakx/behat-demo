@@ -6,11 +6,9 @@ namespace App\ApiPlatform;
 
 use ApiPlatform\Serializer\SerializerContextBuilderInterface;
 use App\Entity\Task;
-use App\Entity\User;
 use App\Security\CurrentlyLoggedInUser;
 use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 #[AsDecorator('api_platform.serializer.context_builder')]
@@ -22,7 +20,6 @@ final readonly class AddCurrentUserToConstructorParameters implements Serializer
 
     public function __construct(
         private SerializerContextBuilderInterface $decorated,
-        private TokenStorageInterface $tokenStorage,
         private CurrentlyLoggedInUser $currentlyLoggedInUser,
     ) {
     }

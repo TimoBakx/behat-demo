@@ -1,0 +1,58 @@
+{
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "@context",
+        "@id",
+        "@type",
+        "hydra:totalItems",
+        "hydra:member"
+    ],
+    "properties": {
+        "@context": {
+            "type": "string"
+        },
+        "@id": {
+            "type": "string"
+        },
+        "@type": {
+            "type": "string"
+        },
+        "hydra:totalItems": {
+            "type": "integer"
+        },
+        "hydra:member": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "required": [
+                    "@id",
+                    "@type",
+                    "title",
+                    "dueDate"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "@id": {
+                        "type": "string"
+                    },
+                    "@type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "dueDate": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
+
+
