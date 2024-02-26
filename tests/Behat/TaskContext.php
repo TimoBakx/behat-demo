@@ -74,4 +74,24 @@ final class TaskContext implements Context
         $this->manager->persist($task);
         $this->manager->flush();
     }
+
+    /**
+     * @Given /^task \{([0-9a-f-]+)\} should (not )?exist$/
+     *
+     * @throws \RuntimeException
+     */
+    public function taskShouldExist(string $id, bool $not = false): void
+    {
+        $this->manager->clear();
+
+        $task = $this->repository->find(Uuid::fromString($id));
+
+        if ($not && $task !== null) {
+            throw new \RuntimeException('Task %d exists, while expeciting it should not.');
+        }
+
+        if (!$not && $task === null) {
+            throw new \RuntimeException('Task %d does not exist, while expecting it should.');
+        }
+    }
 }
