@@ -96,7 +96,5 @@ final readonly class ApplicationContext implements Context
 
         $token = $this->jwtManager->create($user);
         $this->restContext->iAddHeaderEqualTo('Authorization', 'Bearer ' . $token);
-
-//        $this->loggedInUser = $user;
     }
 }
