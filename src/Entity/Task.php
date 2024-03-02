@@ -13,18 +13,21 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['read']],
-    denormalizationContext: ['groups' => ['write']],
+    normalizationContext: ['groups' => [self::READ]],
+    denormalizationContext: ['groups' => [self::WRITE]],
 )]
 class Task
 {
+    private const READ = 'task:read';
+    private const WRITE = 'task:write';
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME)]
     private Uuid $id;
 
     public function __construct(
         #[ORM\Column(length: 255, nullable: false)]
-        #[Groups(['read', 'write'])]
+        #[Groups([self::READ, self::WRITE])]
         public string $title,
 
         #[ORM\ManyToOne]
@@ -32,7 +35,7 @@ class Task
         private User $owner,
 
         #[ORM\Column(nullable: true)]
-        #[Groups(['read', 'write'])]
+        #[Groups([self::READ, self::WRITE])]
         public ?\DateTimeImmutable $dueDate = null,
 
     ) {
@@ -44,13 +47,8 @@ class Task
         return $this->id;
     }
 
-    public function getOwner(): ?User
+    public function getOwner(): User
     {
         return $this->owner;
-    }
-
-    public function setOwner(User $owner): void
-    {
-        $this->owner = $owner;
     }
 }
