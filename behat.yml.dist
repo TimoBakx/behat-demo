@@ -17,9 +17,6 @@ default:
         Behatch\Extension: ~
         Behat\MinkExtension:
             base_url: ''
-#            linku_browserkit:
-#                default_client_options:
-#                    cafile: '/Users/timobakx/cert/server.pem'
             sessions:
                 browserkit:
                     browserkit_http: ~
