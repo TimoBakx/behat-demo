@@ -1,10 +1,12 @@
 @resetDatabase
 Feature: Editing tasks
 
-  Scenario: As a user, I can edit my task
+  Background:
     Given there is a user "testuser@timobakx.dev"
     And there is a task {123e4567-e89b-12d3-a456-426614174000} owned by "testuser@timobakx.dev" with title "Original task"
-    And I am logged in as "testuser@timobakx.dev"
+
+  Scenario: As a user, I can edit my task
+    Given I am logged in as "testuser@timobakx.dev"
     When I add "Content-Type" header equal to "application/merge-patch+json"
     And I send a PATCH request to "/tasks/123e4567-e89b-12d3-a456-426614174000" with body:
     """
@@ -19,9 +21,7 @@ Feature: Editing tasks
     And the title of task {123e4567-e89b-12d3-a456-426614174000} should be "Updated task"
 
   Scenario: As a user, I cannot edit a task of someone else
-    Given there is a user "testuser@timobakx.dev"
-    And there is a task {123e4567-e89b-12d3-a456-426614174000} owned by "other-user@timobakx.dev" with title "Original task"
-    And I am logged in as "testuser@timobakx.dev"
+    Given I am logged in as "other-user@timobakx.dev"
     When I add "Content-Type" header equal to "application/merge-patch+json"
     And I send a PATCH request to "/tasks/123e4567-e89b-12d3-a456-426614174000" with body:
     """
@@ -34,8 +34,6 @@ Feature: Editing tasks
     And the title of task {123e4567-e89b-12d3-a456-426614174000} should be "Original task"
 
   Scenario: As a visitor, I cannot edit a task
-    Given there is a user "testuser@timobakx.dev"
-    And there is a task {123e4567-e89b-12d3-a456-426614174000} owned by "testuser@timobakx.dev" with title "Original task"
     When I add "Content-Type" header equal to "application/merge-patch+json"
     And I send a PATCH request to "/tasks/123e4567-e89b-12d3-a456-426614174000" with body:
     """
