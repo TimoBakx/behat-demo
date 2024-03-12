@@ -16,7 +16,11 @@ default:
         FriendsOfBehat\SymfonyExtension: ~
         Behatch\Extension: ~
         Behat\MinkExtension:
+            # Add the URL to your local environment here if you use something else than http://localhost/
             base_url: ''
+
             sessions:
                 browserkit:
-                    browserkit_http: ~
+                    browserkit_http:
+                        http_client_parameters:
+                            cafile: ~ # Add the path to your certificate here, if you have self signed HTTPS
