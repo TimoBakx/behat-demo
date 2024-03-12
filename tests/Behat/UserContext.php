@@ -27,7 +27,7 @@ final readonly class UserContext implements Context
     }
 
     /**
-     * @Given /^there is a user "([^"]*)"$/
+     * @Given there is a user :email
      */
     public function thereIsAUser(string $email)
     {
