@@ -13,6 +13,5 @@ Feature: Creating tasks
     """
     Then the response status code should be 201
     And the response should be in JSON
-    And print last JSON response
     And the JSON should be valid according to the schema "features/tasks/schemas/task.json"
     And the newest task should be owned by "testuser@timobakx.dev"
