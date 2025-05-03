@@ -1,7 +1,7 @@
 @resetDatabase
 Feature: Creating tasks
 
-  Scenario: As a user, I can c reate a task
+  Scenario: As a user, I can create a task
     Given there is a user "testuser@timobakx.dev"
     And I am logged in as "testuser@timobakx.dev"
     When I send a POST request to "/tasks" with body:

@@ -5,8 +5,8 @@
         "@context",
         "@id",
         "@type",
-        "hydra:totalItems",
-        "hydra:member"
+        "totalItems",
+        "member"
     ],
     "properties": {
         "@context": {
@@ -18,10 +18,10 @@
         "@type": {
             "type": "string"
         },
-        "hydra:totalItems": {
+        "totalItems": {
             "type": "integer"
         },
-        "hydra:member": {
+        "member": {
             "type": "array",
             "minItems": 1,
             "items": {

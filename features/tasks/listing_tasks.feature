@@ -1,5 +1,5 @@
 @resetDatabase
-Feature: Reading tasks
+Feature: Viewing a list of tasks
 
   Scenario: As a user, I can view a list of my tasks
     Given there is a user "testuser@timobakx.dev"
@@ -10,7 +10,7 @@ Feature: Reading tasks
     Then the response status code should be 200
     And the response should be in JSON
     And the JSON should be valid according to the schema "features/tasks/schemas/list.json"
-    And the JSON node "hydra:member" should have 2 elements
+    And the JSON node "member" should have 2 elements
 
   Scenario: As a user, I cannot view the task of someone else in my list
     Given there is a user "testuser@timobakx.dev"
@@ -21,7 +21,7 @@ Feature: Reading tasks
     Then the response status code should be 200
     And the response should be in JSON
     And the JSON should be valid according to the schema "features/tasks/schemas/list.json"
-    And the JSON node "hydra:member" should have 1 element
+    And the JSON node "member" should have 1 element
 
   Scenario: As a visitor, I cannot view a list of tasks
     Given there is a user "testuser@timobakx.dev"
