@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ApiPlatform;
 
-use ApiPlatform\Serializer\SerializerContextBuilderInterface;
+use ApiPlatform\State\SerializerContextBuilderInterface;
 use App\Entity\Task;
 use App\Security\CurrentlyLoggedInUser;
 use Symfony\Component\DependencyInjection\Attribute\AsDecorator;

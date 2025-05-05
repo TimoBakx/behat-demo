@@ -37,7 +37,6 @@ class Task
         #[ORM\Column(nullable: true)]
         #[Groups([self::READ, self::WRITE])]
         public ?\DateTimeImmutable $dueDate = null,
-
     ) {
         $this->id = Uuid::v7();
     }
