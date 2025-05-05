@@ -7,8 +7,10 @@ namespace App\Tests\Behat;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 final readonly class UserContext implements Context
 {
@@ -42,5 +44,19 @@ final readonly class UserContext implements Context
         }
 
         return $user;
+    }
+
+    #[Given('there is a user :email with UUID :uuid')]
+    public function thereIsAUserWithUuid(string $email, string $uuid)
+    {
+        $user = $this->thereIsAUser($email);
+
+        $property = (new \ReflectionClass($user))->getProperty('id');
+        $property->setAccessible(true);
+        $property->setValue($user, Uuid::fromString($uuid));
+        $property->setAccessible(false);
+
+        $this->manager->persist($user);
+        $this->manager->flush();
     }
 }
